@@ -1,0 +1,148 @@
+@mixin hover() {
+  &:not(.active):not(.no-events):not(:disabled):hover {
+    @content;
+  }
+}
+
+@mixin hover-color {
+  @include hover {
+    background-color: $hover-bg;
+    border-color: $hover-bg;
+    color: $primary;
+  }
+}
+
+@mixin focus() {
+  :host-context(.using-keyboard) &,
+  .using-keyboard & {
+    &:not(.active):not(.no-events):not(:disabled):focus {
+      @content;
+    }
+  }
+}
+
+@mixin focus-color {
+  @include focus {
+    background-color: $focus-bg;
+    border-color: $focus-bg;
+    color: $primary;
+  }
+}
+
+@mixin placeholder() {
+  &::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+    @content;
+  }
+  &::-moz-placeholder { /* Firefox 19+ */
+    @content;
+  }
+  &:-ms-input-placeholder { /* IE 10+ */
+    @content;
+  }
+  &:-moz-placeholder { /* Firefox 18- */
+    @content;
+  }
+}
+
+@mixin flex-col($width) {
+  width: $width;
+  max-width: $width;
+  flex: 0 0 $width;
+}
+
+@mixin flex-col-width($columns, $gap: 30) {
+  width: calc((100% - #{$gap}px * (#{$columns} - 1))/#{$columns});
+  max-width: calc((100% - #{$gap}px * (#{$columns} - 1))/#{$columns});
+  flex: 0 0 calc((100% - #{$gap}px * (#{$columns} - 1))/#{$columns});
+}
+
+@mixin text-overflow($line-clamp: 1) {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: $line-clamp;
+  -webkit-box-orient: vertical;
+  text-overflow: ellipsis;
+  max-width: 100%;
+  white-space: normal;
+}
+
+@mixin styled-scroll-mixin {
+  /* total width */
+  &::-webkit-scrollbar {
+    background-color: transparent;
+    width: 8px;
+  }
+
+  /* background of the scrollbar except button or resizer */
+  &::-webkit-scrollbar-track {
+    background-color: transparent;
+  }
+
+  /* scrollbar itself */
+  &::-webkit-scrollbar-thumb {
+    background-color: #babac0;
+    border-radius: 16px;
+    border: 4px solid transparent;
+  }
+
+  /* set button(top and bottom of the scrollbar) */
+  &::-webkit-scrollbar-button {
+    display: none;
+  }
+}
+
+@mixin styled-scroll {
+  /* total width */
+  :host-context(body:not(.ios):not(.mac-os):not(.phone)) &,
+  body:not(.ios):not(.mac-os) & {
+    @include styled-scroll-mixin;
+  }
+}
+
+@mixin queryMax($max) {
+  @media (max-width: $max) {
+    @content;
+  }
+}
+
+@mixin queryMin($min) {
+  @media (min-width: $min) {
+    @content;
+  }
+}
+
+@mixin queryMinMax($min, $max) {
+  @media (min-width: $min) and (max-width: $max) {
+    @content;
+  }
+}
+
+@mixin query-1439() {
+  @include queryMax(1439px) {
+    @content;
+  }
+}
+
+@mixin query-1199() {
+  @include queryMax(1199px) {
+    @content;
+  }
+}
+
+@mixin query-991() {
+  @include queryMax(991px) {
+    @content;
+  }
+}
+
+@mixin query-767() {
+  @include queryMax(767px) {
+    @content;
+  }
+}
+
+@mixin query-660() {
+  @include queryMax(660px) {
+    @content;
+  }
+}

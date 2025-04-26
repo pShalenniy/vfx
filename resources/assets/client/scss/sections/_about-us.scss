@@ -1,0 +1,10 @@
+.about-us-text {
+    line-height: 1.7rem !important;
+    @include queryMin(991px) {
+        padding-right: 20rem;
+    }
+}
+
+.about-us-item-block {
+    padding-bottom: 4.5rem !important;
+}

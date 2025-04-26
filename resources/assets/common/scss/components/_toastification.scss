@@ -1,0 +1,51 @@
+$vt-toast-min-height: unset;
+$vt-toast-max-height: unset;
+$vt-toast-max-width: 400px;
+
+$vt-color-default: #fff;
+$vt-color-info: #fff;
+$vt-color-success: #fff;
+$vt-color-warning: #fff;
+$vt-color-error: #fff;
+
+$vt-text-color-default: #7367f0;
+//$vt-text-color-default: $primary;
+$vt-text-color-info: #00cfe8;
+//$vt-text-color-info: $info;
+$vt-text-color-success: #7ed321;
+//$vt-text-color-success: $success;
+$vt-text-color-warning: #ff9f43;
+//$vt-text-color-warning: $warning;
+$vt-text-color-error: #ff0c00;
+//$vt-text-color-error: $danger;
+$vt-font-family: inherit;
+
+// Import the regular Vue Toastification stylesheets (or create your own)
+@import 'vue-toastification/src/scss/_variables';
+@import 'vue-toastification/src/scss/_toastContainer';
+@import 'vue-toastification/src/scss/_toast';
+@import 'vue-toastification/src/scss/_closeButton';
+@import 'vue-toastification/src/scss/_progressBar';
+@import 'vue-toastification/src/scss/_icon';
+@import 'vue-toastification/src/scss/animations/fade';
+
+.#{$vt-namespace}__toast {
+    padding: 1rem;
+    box-shadow: 0 4px 24px 0 rgba(#22292f, 0.1);
+    border-radius: 0.428rem;
+}
+
+@media only screen and (max-width: 600px) {
+    .Vue-Toastification__container {
+        .Vue-Toastification__toast {
+            width: 90%;
+        }
+    }
+}
+
+// ------------Dark Layout -----------//
+.dark-layout {
+    .#{$vt-namespace}__toast {
+        background-color: #283046;
+    }
+}

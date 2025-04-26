@@ -1,0 +1,92 @@
+version: "3.8"
+services:
+  php:
+    build:
+      context: ./
+      dockerfile: ./.docker/php/Dockerfile
+    container_name: vfx_php
+    hostname: vfx_php
+    env_file:
+      - .docker.env
+    volumes:
+      - ./:/app:cached
+      - ./.docker/bash/:/root/.bash:cached
+      - ./.docker/php/local.ini:/usr/local/etc/php/conf.d/local.ini:cached
+
+  phpd:
+    build:
+      context: ./
+      dockerfile: ./.docker/php/Dockerfile
+      args:
+        PHP_USE_XDEBUG: "true"
+    container_name: vfx_phpd
+    hostname: vfx_phpd
+    env_file:
+      - .docker.env
+    volumes:
+      - ./:/app:cached
+      - ./.docker/zsh/.zshrc:/home/developer/.zshrc:cached
+      - ./.docker/php/conf.d/local.ini:/usr/local/etc/php/conf.d/local.ini:cached
+
+  scraping:
+    build:
+      context: .
+      dockerfile: ./.docker/scraping/Dockerfile
+    container_name: vfx_scraping
+    hostname: vfx_scraping
+    volumes:
+      - ./scraping:/app:cached
+
+  mysql:
+    image: mysql:8.0
+    container_name: mysql80
+    hostname: mysql80
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./.docker/mysql/data:/var/lib/mysql:cached
+    environment:
+      - "MYSQL_ROOT_PASSWORD=pass"
+
+  nginx:
+    image: nginx:1.23
+    container_name: vfx_nginx
+    hostname: vfx_nginx
+    volumes:
+      - ./:/var/www
+      - ./.docker/nginx/nginx.conf:/etc/nginx/conf.d/default.conf
+    ports:
+      - "80:80"
+    depends_on:
+      - php
+
+  elasticsearch:
+    image: elasticsearch:7.17.8
+    container_name: vfx_elasticsearch
+    hostname: vfx_elasticsearch
+    environment:
+      - discovery.type=single-node
+      - ES_JAVA_OPTS=-Xms4096m -Xmx4096m
+    ports:
+      - "9200:9200"
+      - "9300:9300"
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    volumes:
+      - ./.docker/elasticsearch:/usr/share/elasticsearch/data:delegated
+
+  redis:
+    image: redis:7.0.7
+    container_name: vfx_redis
+    hostname: vfx_redis
+    volumes:
+      - ./.docker/redis/data:/data:delegated
+
+  adminer:
+    image: adminer
+    container_name: vfx_adminer
+    hostname: vfx_adminer
+    ports:
+      - "8080:8080"

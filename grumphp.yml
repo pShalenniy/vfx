@@ -1,0 +1,25 @@
+grumphp:
+  parallel:
+    enabled: false
+  tasks:
+    phpcsfixer:
+      config: .php-cs-fixer.php
+      allow_risky: true
+
+    phpcs:
+      standard: "phpcs.xml"
+      tab_width: 4
+      triggered_by: [php]
+      ignore_patterns:
+        - "*.blade.php"
+        - "app/Extensions/*"
+
+    fqn_checker: ~
+
+    phpunit:
+
+services:
+  McMatters\Grumphp\FqnChecker\FqnCheckerTask:
+    tags:
+      - name: grumphp.task
+        task: fqn_checker

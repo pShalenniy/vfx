@@ -1,0 +1,14 @@
+.custom-switch {
+    padding-left: 0.25rem;
+
+    &.b-custom-control-lg {
+        .custom-control-label {
+            font-size: 1.25rem;
+            padding-left: 0.25rem;
+
+            p {
+                margin-top: 0.5rem;
+            }
+        }
+    }
+}

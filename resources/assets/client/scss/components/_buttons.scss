@@ -1,0 +1,128 @@
+.btn {
+    position: relative;
+    height: 60px;
+    padding: 18px 20px;
+    font-size: 17px;
+    line-height: 24px;
+    font-weight: 600;
+    border: 0;
+    transition: $transition;
+    border-radius: 0;
+
+    &.btn-sm {
+        height: 48px;
+        width: auto;
+        padding: 10px 20px;
+    }
+
+    &-primary {
+        color: #fff;
+    }
+
+    &-grey {
+        background-color: #6e7273;
+        border-color: #6e7273;
+    }
+
+    &-rounded {
+        border-radius: 6px;
+    }
+
+    &.btn-xs {
+        height: 40px;
+        padding: 7px 20px;
+        width: auto;
+        text-transform: none;
+    }
+}
+
+.btn-outline-dark {
+    border-color: $base-color;
+
+    &:after {
+        border-image: linear-gradient(to right, $blue-light, $blue);
+        border-image-slice: 1;
+    }
+
+    &:hover {
+        color: $base-color;
+        border-color: $base-color;
+    }
+}
+
+.btn-outline-light {
+    border-color: $blue;
+    border-image: linear-gradient(to right, $blue-light, $blue);
+    border-image-slice: 1;
+
+    &:after {
+        border-color: $base-color;
+    }
+
+    &.btn-checkbox {
+        cursor: default;
+        pointer-events: none;
+    }
+
+    &.btn-small {
+        flex: 0 0 400px;
+        max-width: 400px;
+        width: 100%;
+    }
+}
+
+//btn-close
+
+.close {
+    font-size: 0;
+    opacity: 1;
+    position: absolute;
+    right: 0;
+    color: $base-color;
+    width: 20px;
+    height: 20px;
+    background-color: transparent;
+
+    &:after,
+    &:before {
+        position: absolute;
+        content: '';
+        width: 20px;
+        height: 2px;
+        right: 0;
+        top: 9px;
+        background-color: currentColor;
+        transform: rotate(45deg);
+    }
+
+    &:after {
+        transform: rotate(-45deg);
+    }
+
+    &:hover {
+        opacity: 0.8;
+    }
+}
+
+.btn-arrow-down {
+    padding: 0;
+    margin-top: 20px;
+    transform: rotate(90deg) translateY(-100%);
+    transform-origin: top left;
+    font-size: 34px;
+    fill: #ffffff;
+    font-weight: 800;
+    height: auto;
+    line-height: 0.8;
+}
+
+.btn-group-rounded {
+    background-color: #c8c9c8;
+    padding: 5px;
+    border-radius: 30px;
+    gap: 10px;
+    max-width: 420px;
+    .btn {
+        border-radius: 20px;
+    }
+}

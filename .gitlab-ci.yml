@@ -1,0 +1,138 @@
+default:
+  tags:
+    - amgrade.dev
+
+stages:
+  - build:dev
+  - test
+  - build
+  - push
+  - deploy:staging
+  - post-tasks
+  - cleanup
+
+build:dev:
+  stage: build:dev
+  allow_failure: true
+  script:
+    - docker build -f .ops/php/Dockerfile -t $CI_REGISTRY/$CI_PROJECT_NAMESPACE/$CI_PROJECT_NAME/php:$CI_COMMIT_SHA .
+
+test:phpunit:
+  stage: test
+  allow_failure: true
+  script:
+    - docker run --rm -e CONTAINER_ROLE=exec $CI_REGISTRY/$CI_PROJECT_NAMESPACE/$CI_PROJECT_NAME/php:$CI_COMMIT_SHA ./vendor/bin/phpunit
+
+build-main:
+  stage: build
+  only:
+    refs:
+      - develop
+  script:
+    - docker build -f .ops/php/Dockerfile -t $CI_REGISTRY/$CI_PROJECT_NAMESPACE/$CI_PROJECT_NAME/php --build-arg COMPOSER_ARGS="--no-dev" .
+    - docker build -f .ops/nginx/Dockerfile -t $CI_REGISTRY/$CI_PROJECT_NAMESPACE/$CI_PROJECT_NAME/nginx --build-arg PHP_IMAGE=$CI_REGISTRY/$CI_PROJECT_NAMESPACE/$CI_PROJECT_NAME/php .
+
+build-php-cli:
+  stage: build
+  only:
+    refs:
+      - develop
+  script:
+    - docker build -f .ops/php/Dockerfile-cli -t $CI_REGISTRY/$CI_PROJECT_NAMESPACE/$CI_PROJECT_NAME/php-cli --build-arg COMPOSER_ARGS="--no-dev" .
+    - docker build -f .ops/cron/Dockerfile -t $CI_REGISTRY/$CI_PROJECT_NAMESPACE/$CI_PROJECT_NAME/cron --build-arg PHP_IMAGE=$CI_REGISTRY/$CI_PROJECT_NAMESPACE/$CI_PROJECT_NAME/php-cli .
+
+build-scraping:
+  stage: build
+  only:
+    refs:
+      - develop
+  script:
+    - docker build -f .ops/scraping/Dockerfile -t $CI_REGISTRY/$CI_PROJECT_NAMESPACE/$CI_PROJECT_NAME/scraping .
+
+push:
+  stage: push
+  interruptible: true
+  only:
+    refs:
+      - develop
+  before_script:
+    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+  script:
+    - docker push $CI_REGISTRY/$CI_PROJECT_NAMESPACE/$CI_PROJECT_NAME/php
+    - docker push $CI_REGISTRY/$CI_PROJECT_NAMESPACE/$CI_PROJECT_NAME/php-cli
+    - docker push $CI_REGISTRY/$CI_PROJECT_NAMESPACE/$CI_PROJECT_NAME/cron
+    - docker push $CI_REGISTRY/$CI_PROJECT_NAMESPACE/$CI_PROJECT_NAME/nginx
+    - docker push $CI_REGISTRY/$CI_PROJECT_NAMESPACE/$CI_PROJECT_NAME/scraping
+  after_script:
+    - docker logout
+
+deploy:staging:
+  stage: deploy:staging
+  interruptible: true
+  only:
+    refs:
+      - develop
+  script:
+    - cd $STAGING_PROJECT_PATH
+    - docker compose pull
+    - docker compose up -d --force-recreate --remove-orphans
+    - docker run --rm --env-file=.env getsentry/sentry-cli releases new $CI_COMMIT_SHORT_SHA
+
+artisan:migrate:
+  stage: post-tasks
+  when: manual
+  only:
+    refs:
+      - develop
+  script:
+    - cd $STAGING_PROJECT_PATH
+    - docker compose exec -it php php artisan migrate --force
+
+artisan:db:seed:
+  stage: post-tasks
+  variables:
+    LARAVEL_RUN_SEEDER: ''
+  when: manual
+  rules:
+    - if: $CI_COMMIT_REF_NAME == "develop"
+    - if: $LARAVEL_RUN_SEEDER != ""
+  script:
+    - cd $STAGING_PROJECT_PATH
+    - docker compose exec -it php php artisan db:seed --class=$LARAVEL_RUN_SEEDER --force
+
+artisan:elasticsearch:reindex:
+  stage: post-tasks
+  when: manual
+  only:
+    refs:
+      - develop
+  script:
+    - cd $STAGING_PROJECT_PATH
+    - docker compose exec -it php php artisan elasticsearch:setup
+    - docker compose exec -it php php artisan elasticsearch:reindex
+
+artisan:cache:clear:
+  stage: post-tasks
+  when: manual
+  only:
+    refs:
+      - develop
+  script:
+    - cd $STAGING_PROJECT_PATH
+    - docker compose exec -it php php artisan cache:clear
+    - docker compose up -d --force-recreate
+
+cleanup:
+  stage: cleanup
+  script:
+    - >
+      docker image prune -f \
+        --filter "until=360h" \
+        --filter "label=company=amgrade" \
+        --filter "label=type=laravel" \
+        --filter "label=project=vfx"
+    - >
+      docker container prune -f \
+        --filter "label=company=amgrade" \
+        --filter "label=type=laravel" \
+        --filter "label=project=vfx"

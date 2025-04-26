@@ -1,0 +1,141 @@
+.header {
+    background-color: #040233;
+    padding: 24px 0;
+    .navbar {
+        padding: 0;
+    }
+    .navbar-brand {
+        padding: 0;
+        img {
+            height: 80px;
+        }
+    }
+    .navbar-nav {
+        gap: 30px;
+    }
+    .nav-item .nav-link {
+        color: #fff;
+        padding-left: 0;
+        padding-right: 0;
+        border: 0;
+        background: none;
+        &:hover,
+        &.active {
+            color: $primary;
+        }
+    }
+
+    .navbar-toggler {
+        width: 40px;
+        height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: 0;
+        transition: $transition;
+        padding: 5px 0;
+        cursor: pointer;
+        color: #fff;
+
+        &:focus {
+            box-shadow: none !important;
+            outline: none;
+        }
+
+        .navbar-toggler-icon {
+            background: none;
+            display: block;
+            transition: $transition;
+            width: 30px;
+            height: 20px;
+            border: {
+                width: 2px 0;
+                color: currentColor transparent;
+                style: solid;
+            };
+            position: relative;
+
+            &:before,
+            &:after {
+                //transition: $transition;
+                transition: transform 0.3s;
+                position: absolute;
+                content: '';
+                top: 7px;
+                height: 2px;
+                background-color: currentColor;
+                left: 0;
+                right: 0;
+                transform-origin: center;
+            }
+        }
+
+        &.collapsed {
+            .navbar-toggler-icon {
+                border-color: currentColor transparent;
+
+                &:before,
+                &:after {
+                    transform: rotate(0deg);
+                }
+            }
+        }
+
+        &:not(.collapsed) {
+            .navbar-toggler-icon {
+                border-color: transparent;
+                &:before {
+                    transform: rotate(45deg);
+                }
+                &:after {
+                    transform: rotate(-45deg);
+                }
+            }
+        }
+
+        @include queryMin(992px) {
+            display: none !important;
+        }
+    }
+
+    .collapse {
+        flex-direction: column;
+        flex: 0 0 auto;
+    }
+    @include query-991 {
+        .collapse {
+            position: absolute;
+            top: 100%;
+            background: $secondary;
+            z-index: 100;
+            left: -30px;
+            right: -30px;
+            padding: 30px;
+            text-align: center;
+        }
+        .navbar-social {
+            justify-content: center;
+        }
+    }
+}
+
+.navbar-socials {
+    display: flex;
+    margin-left: auto;
+    justify-content: flex-end;
+    gap: 20px;
+    padding: 0;
+    .nav-item .nav-link {
+        color: $primary;
+        &:hover {
+            opacity: 0.8;
+        }
+        > img {
+            height: 20px;
+        }
+    }
+    @include query-991 {
+        justify-content: center;
+        margin-bottom: 30px;
+    }
+}

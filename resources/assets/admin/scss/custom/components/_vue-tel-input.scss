@@ -1,0 +1,29 @@
+.dark-layout {
+    .vue-tel-input {
+        .vti__input {
+            background-color: transparent !important;
+            color: #ced4da;
+        }
+
+        .vti__dropdown-item {
+            color: #ced4da;
+        }
+
+        .vti__dropdown-item.highlighted {
+            color: #7367f0 !important;
+            background-color: #4e5779;
+        }
+
+        .vti__dropdown-arrow {
+            color: #7367f0;
+        }
+
+        .vti__dropdown-list.below {
+            position: absolute;
+            z-index: 1000;
+            margin: 0;
+            text-align: left;
+            background: #283046;
+        }
+    }
+}

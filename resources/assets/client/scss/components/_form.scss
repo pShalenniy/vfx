@@ -1,0 +1,467 @@
+.form-group {
+    position: relative;
+    margin-bottom: 20px;
+
+    small {
+        display: inline-block;
+        padding: 8px 10px 0;
+        font-size: 12px;
+    }
+
+    &:last-child {
+        margin-bottom: 0;
+    }
+
+    .password-btn {
+        position: absolute;
+        right: 22px;
+        background-color: transparent;
+        top: 16px;
+        font-weight: 500;
+    }
+}
+
+.form-text {
+    font-size: 16px;
+    line-height: 24px;
+    font-weight: 400;
+    color: #4a4a4a;
+    margin-top: 0;
+    position: relative;
+
+    &__small {
+        font-size: 12px;
+        line-height: 16px;
+        margin-bottom: 16px;
+        padding-top: 20px;
+        margin-top: -20px;
+        padding-left: 20px;
+        margin-left: -20px;
+    }
+
+    &__right {
+        font-size: 12px;
+        line-height: 16px;
+        text-align: right;
+        margin-bottom: 51px;
+    }
+
+    &__link {
+        color: $blue;
+        font-weight: 600;
+        cursor: pointer;
+    }
+}
+
+.mx-datepicker .mx-input,
+.vs__dropdown-toggle,
+.custom-select,
+.custom-file-label,
+.form-control {
+    background-color: #fff;
+    position: relative;
+    width: 100%;
+    color: $base-color;
+    padding: 10px 10px;
+    cursor: pointer;
+    transition: $transition;
+    border-radius: 0;
+    border: 1px solid $border-color;
+    font-size: 25px;
+    font-weight: 700;
+    line-height: 41px;
+    height: 63px;
+
+    .form-sm & {
+        font-size: 21px;
+        line-height: 37px;
+        height: 47px;
+    }
+
+    .form-xs & {
+        font-size: 17px;
+        line-height: 25px;
+        height: 47px;
+    }
+
+    .vs__dropdown-toggle {
+        border: none;
+        padding: 0;
+
+        .vs__selected {
+            background-color: $primary;
+            color: #fff;
+            font-size: 16px;
+            border: 0;
+            padding-left: 6px;
+            padding-right: 6px;
+
+            button {
+                color: #fff;
+                margin-left: 5px;
+
+                svg {
+                    fill: currentColor;
+                }
+            }
+        }
+    }
+
+    &::placeholder {
+        color: $placeholder;
+        transition: $transition;
+    }
+
+    &:hover, &:focus {
+        color: $base-color;
+        box-shadow: none;
+        border-color: $base-color;
+
+        &::placeholder {
+            opacity: 1;
+        }
+    }
+}
+
+.custom-file {
+    height: 63px;
+
+    .form-sm & {
+        min-height: 47px;
+    }
+
+    .form-xs & {
+        min-height: 47px;
+    }
+
+    &-label {
+        position: absolute;
+        margin: 0;
+
+        &:after {
+            padding: 10px 10px;
+            height: auto;
+            line-height: 41px;
+
+            .form-sm & {
+                line-height: 25px;
+            }
+
+            .form-xs & {
+                line-height: 25px;
+            }
+        }
+    }
+}
+
+.col-form-label {
+    font-size: 19px;
+    font-weight: 500;
+}
+
+.custom-control {
+    position: relative;
+    padding: 15px 0px 15px 58px;
+
+    &-inline {
+        display: inline-flex;
+        margin-right: 1rem;
+    }
+
+    .form-control {
+        border: 0;
+    }
+
+    .invalid-feedback {
+        top: calc(100% - 15px);
+        left: 65px;
+    }
+
+    &-label {
+        font-size: 12px;
+        line-height: 16px;
+
+        a {
+            &:hover {
+                color: $blue;
+            }
+        }
+    }
+
+    &-label-big {
+        font-size: 16px;
+        line-height: 32px;
+        font-weight: 600;
+        margin-bottom: 5px;
+        cursor: pointer;
+        transition: $transition;
+        margin-top: -4px;
+
+        &:hover {
+            color: $blue;
+        }
+    }
+
+    &-input {
+        position: absolute;
+        top:0;
+        left: 0;
+        appearance: none;
+        cursor: pointer;
+
+        &:before {
+            position: absolute;
+            top: 11px;
+            left: 10px;
+            content: "";
+            width: 24px;
+            height: 24px;
+            border: 2px solid #4a4a4a;
+            border-radius: 50%;
+            transition: $transition;
+        }
+
+        &:after {
+            position: absolute;
+            top: 17px;
+            left: 16px;
+            content: "";
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background-image: linear-gradient($blue-light, $blue);
+            opacity: 0;
+            transition: $transition;
+        }
+
+        &[type="checkbox"] {
+            &:before ,
+            &:after {
+                border-radius: 0;
+            }
+        }
+
+        &:checked {
+
+            &:after {
+                opacity: 1;
+            }
+        }
+
+        &:hover, &:checked {
+
+            &:before {
+                border: 2px solid $blue;
+            }
+        }
+
+        &.is-invalid {
+
+            &:before {
+                border: 2px solid $danger;
+            }
+        }
+    }
+}
+
+.custom-switch {
+    padding-left: 2.25rem;
+
+    &.b-custom-control-lg {
+        padding-left: 40px;
+
+        .custom-control-label {
+            font-size: 1.25rem;
+            line-height: 1.5;
+
+            &:before {
+                top: 0.3125rem;
+                height: 1.25rem;
+                left: -2.8125rem;
+                width: 2.1875rem;
+                border-radius: 0.625rem;
+            }
+
+            &:after {
+                top: calc(0.3125rem + 2px);
+                left: calc(-2.8125rem + 2px);
+                width: calc(1.25rem - 4px);
+                height: calc(1.25rem - 4px);
+                border-radius: 0.625rem;
+                background-size: 50% 50%;
+            }
+        }
+    }
+}
+
+.social-link-prepend {
+    .input-group-prepend {
+        border-bottom: 1px solid #4a4a4a;
+
+        .input-group-text {
+            background-color: unset;
+            border: none;
+            color: #4a4a4a;
+            font-size: 20px;
+            font-weight: 500;
+            line-height: 24px;
+            opacity: 0.25;
+            padding: 10px 2px;
+        }
+    }
+}
+
+.form-check {
+    display: flex;
+    align-content: center;
+    gap: 8px;
+
+    input {
+        margin-top: 0;
+        flex: 0 0 auto;
+    }
+
+    label {
+        word-break: break-word;
+    }
+}
+
+.form-highlighted {
+    padding: 20px;
+    background-color: #fafafa;
+    gap: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    font-weight: 500;
+
+    .btn {
+        background-color: transparent;
+        border-image-source: linear-gradient(103deg, #ff473d 0%, #c53f97 48%, #392dbf);
+    }
+
+    .form-control {
+        background-color: transparent;
+        font-size: 16px;
+        font-weight: 500;
+    }
+
+    .social-link-prepend .input-group-prepend .input-group-text {
+        font-size: 16px;
+        font-weight: 500;
+    }
+
+    &--info {
+        background-color: transparent;
+
+        .btn {
+            border-image-source: none;
+            border-color: $base-color;
+        }
+    }
+}
+
+.form-filter {
+    .custom-control {
+        padding: 10px 0 10px 34px;
+
+        &-input:after {
+            top: 12px;
+            left: 6px;
+        }
+
+        &-input:before {
+            top: 6px;
+            left: 0;
+        }
+
+        &-label {
+            font-size: 16px;
+        }
+    }
+}
+
+.instagram-preview {
+    display: flex;
+
+    img {
+        min-width: 36px;
+        height: 36px;
+        border-radius: 50%;
+    }
+}
+
+.input-group-append.without-borders {
+    .input-group-text {
+        background: none;
+        border: 0;
+    }
+}
+
+.vs__selected,
+.vs__search,
+.vs__search:focus {
+    margin: 0;
+    font-weight: 700;
+    color: #4a4a4a;
+    min-width: 1px;
+    white-space: nowrap;
+}
+
+.filter-section .vs__selected-options .vs__search {
+
+}
+
+.vs__selected-options {
+    max-width: 100%;
+    min-width: 1px;
+    //overflow: hidden;
+    margin-right: 8px;
+    gap: 8px;
+    .v-select:not(.vs--multiple) & {
+        flex-wrap: nowrap;
+    }
+}
+
+.mx-datepicker .mx-input {
+    padding-right: 40px;
+    @include placeholder {
+        color: #4a4a4a;
+    }
+}
+
+.vs__clear {
+    display: flex;
+    align-items: center;
+}
+
+.vs__dropdown-option {
+    &.vs__dropdown-option--highlight {
+        background-color: rgba($primary, 0.5);
+        color: inherit;
+    }
+    &.vs__dropdown-option--selected {
+        background-color: $primary;
+    }
+}
+
+.v-select.vs--multiple {
+    .vs__dropdown-toggle {
+        height: auto;
+        min-height: 63px;
+
+        .form-sm & {
+            min-height: 47px;
+        }
+
+        .form-xs & {
+            min-height: 47px;
+        }
+    }
+}
+
+.b-form-datepicker > .btn {
+    padding-bottom: 10px;
+    padding-top: 10px;
+}

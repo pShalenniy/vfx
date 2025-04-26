@@ -1,0 +1,15 @@
+.git
+.docker
+node_modules
+pages
+.docker.env*
+.editorconfig
+.env*
+.eslint*
+.gitattributes
+.php-cs-fixer.php
+.phpunit.result.cache
+docker-compose*.yml
+grumphp.yml
+phpcs.xml
+README.md

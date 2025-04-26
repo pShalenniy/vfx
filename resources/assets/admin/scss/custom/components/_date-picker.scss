@@ -1,0 +1,20 @@
+.dark-layout {
+    .mx-datepicker {
+        .mx-input-wrapper {
+            .mx-input {
+                background-color: #283046;
+                color: #ffffff !important;
+                border-color: #3b4253;
+            }
+            .mx-icon-calendar {
+                color: #ffffff !important;
+            }
+        }
+    }
+}
+
+.mx-calendar {
+    background-color: #1D2330;
+    border-color: #1D2330;
+    border-left: #3b4253;
+}

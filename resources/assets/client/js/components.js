@@ -1,0 +1,27 @@
+import Vue from 'vue';
+
+Vue.component('about-us-page', require('@client/js/components/about-us/AboutUsPage.vue').default);
+Vue.component('account-settings-page', require('@client/js/components/user/AccountSettingsPage.vue').default);
+Vue.component('active-sessions-page', require('@client/js/components/active-session/ActiveSessionsPage.vue').default);
+Vue.component('candidate-account-settings-page', require('@client/js/components/candidate/account-settings/AccountSettingsPage.vue').default);
+Vue.component('candidate-forgot-password-page', require('@client/js/components/candidate/forgot-password/ForgotPasswordPage.vue').default);
+Vue.component('candidate-login-page', require('@client/js/components/candidate/login/LoginPage.vue').default);
+Vue.component('candidate-page', require('@client/js/components/candidate/CandidatePage.vue').default);
+Vue.component('candidate-reset-password-page', require('@client/js/components/candidate/reset-password/ResetPasswordPage.vue').default);
+Vue.component('candidates-page', require('@client/js/components/candidate/CandidatesPage.vue').default);
+Vue.component('contact-us-page', require('@client/js/components/contact-us/ContactUsPage.vue').default);
+Vue.component('forgot-password-page', require('@client/js/components/forgot-password/ForgotPasswordPage.vue').default);
+Vue.component('home-intro-block', require('@client/js/components/home/HomeIntroBlock.vue').default);
+Vue.component('home-our-partners-block', require('@client/js/components/home/HomeOurPartnersBlock.vue').default);
+Vue.component('home-top-block1', require('@client/js/components/home/HomeTopBlock1.vue').default);
+Vue.component('home-top-block2', require('@client/js/components/home/HomeTopBlock2.vue').default);
+Vue.component('home-top-block3', require('@client/js/components/home/HomeTopBlock3.vue').default);
+Vue.component('login-page', require('@client/js/components/login/LoginPage.vue').default);
+Vue.component('privacy-policy-page', require('@client/js/components/privacy-policy/PrivacyPolicyPage.vue').default);
+Vue.component('register-page', require('@client/js/components/register/RegisterPage.vue').default);
+Vue.component('register-subscription-page', require('@client/js/components/register/SubscriptionPage.vue').default);
+Vue.component('register-subscription-thank-you-page', require('@client/js/components/register/SubscriptionThankYouPage.vue').default);
+Vue.component('reset-password-page', require('@client/js/components/reset-password/ResetPasswordPage.vue').default);
+Vue.component('shortlists-page', require('@client/js/components/user/ShortlistsPage.vue').default);
+Vue.component('subscription-inactive-page', require('@client/js/components/subscription/InactivePage.vue').default);
+Vue.component('terms-and-conditions-page', require('@client/js/components/terms-and-conditions/TermsAndConditionsPage.vue').default);

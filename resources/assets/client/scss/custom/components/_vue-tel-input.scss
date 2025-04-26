@@ -1,0 +1,9 @@
+.vue-tel-input {
+    .vti__dropdown-list.below {
+        position: absolute;
+        z-index: 1000;
+        margin: 0;
+        text-align: left;
+        top: 60px;
+    }
+}

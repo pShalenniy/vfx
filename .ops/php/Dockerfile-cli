@@ -1,0 +1,57 @@
+FROM php:8.1-cli-alpine
+LABEL company="amgrade" type="laravel" project="vfx" image="php-cli"
+
+RUN --mount=id=cache-apk,type=cache,target=/var/cache/apk \
+    set -ex; \
+    apk update \
+    && apk add --no-cache \
+      $PHPIZE_DEPS \
+      curl \
+      git \
+      libpng-dev \
+      libxml2-dev \
+      libzip-dev \
+      mysql-client \
+      unzip \
+      zip \
+      zlib-dev \
+    && pecl install redis \
+    && docker-php-ext-install -j "$(nproc)" bcmath gd pcntl pdo_mysql zip > /dev/null \
+    && docker-php-ext-enable redis \
+    && curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer \
+    && apk del $PHPIZE_DEPS
+
+WORKDIR /app
+RUN chown -R www-data:www-data /app
+
+ARG COMPOSER_ARGS
+ENV APP_DEBUG=false
+ENV COMPOSER_ARGS ${COMPOSER_ARGS}
+
+WORKDIR /app
+COPY --chown=www-data:www-data "composer.*" ./
+USER www-data
+RUN --mount=id=cache-composer,type=cache,target=/var/www/.composer \
+    composer install --no-autoloader --no-progress --no-scripts --no-dev
+COPY --chown=www-data:www-data ./ ./
+RUN --mount=id=cache-composer,type=cache,target=/var/www/.composer \
+    composer install -o $COMPOSER_ARGS \
+    && php artisan storage:link \
+    && rm -rf \
+        resources/assets \
+        .babelrc \
+        .gitignore \
+        .gitlab-ci.yml \
+        webpack.config.js \
+        yarn.lock
+
+COPY --chown=www-data:www-data .ops/start.sh ./
+RUN chmod +x /app/start.sh && rm -rf .ops
+
+USER www-data
+
+ARG COMMIT_SHORT_SHA
+ENV COMMIT_SHORT_SHA ${CI_COMMIT_SHORT_SHA}
+
+ENTRYPOINT ["/app/start.sh"]
+CMD php-fpm

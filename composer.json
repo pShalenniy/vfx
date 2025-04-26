@@ -1,0 +1,85 @@
+{
+    "name": "amgrade/vfx",
+    "type": "project",
+    "license": "MIT",
+    "require": {
+        "php": ">=8.1.10",
+        "amgrade/laravel-heimdall": "^1.0",
+        "amgrade/laravel-js-translations": "dev-main",
+        "amgrade/laravel-single-role": "^1.0",
+        "barryvdh/laravel-dompdf": "^2.0",
+        "doctrine/dbal": "^3.6",
+        "elasticsearch/elasticsearch": "7.17",
+        "guzzlehttp/guzzle": "^7.2",
+        "jenssegers/agent": "^2.6",
+        "laravel/framework": "^9.19",
+        "laravel/sanctum": "^3.0",
+        "laravel/tinker": "^2.7",
+        "mcmatters/clearbit-api": "^1.0",
+        "mcmatters/laravel-helpers": "^3.0",
+        "mcmatters/laravel-tracking": "^1.1",
+        "mcmatters/ticl": "dev-master",
+        "predis/predis": "^2.0",
+        "sentry/sentry-laravel": "^3.3",
+        "spatie/laravel-cookie-consent": "^3.2",
+        "tightenco/ziggy": "^1.5"
+    },
+    "require-dev": {
+        "barryvdh/laravel-debugbar": "^3.7",
+        "barryvdh/laravel-ide-helper": "^2.12",
+        "fakerphp/faker": "^1.9.1",
+        "friendsofphp/php-cs-fixer": "^3.12",
+        "mcmatters/grumphp-fqn-checker": "^3.1",
+        "mockery/mockery": "^1.5",
+        "nunomaduro/collision": "^6.1",
+        "phpro/grumphp": "^1.13",
+        "phpunit/phpunit": "^9.5.10",
+        "spatie/laravel-ignition": "^1.0",
+        "squizlabs/php_codesniffer": "^3.7"
+    },
+    "autoload": {
+        "psr-4": {
+            "App\\": "app/",
+            "Database\\Factories\\": "database/factories/",
+            "Database\\Seeders\\": "database/seeders/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\": "tests/"
+        }
+    },
+    "scripts": {
+        "post-autoload-dump": [
+            "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump"
+        ],
+        "post-update-cmd": [
+            "@php artisan vendor:publish --tag=laravel-assets --ansi --force"
+        ],
+        "post-root-package-install": [
+            "@php -r \"file_exists('.env') || copy('.env.example', '.env');\""
+        ],
+        "post-create-project-cmd": [
+            "@php artisan key:generate --ansi"
+        ]
+    },
+    "extra": {
+        "laravel": {
+            "dont-discover": [
+                "*"
+            ]
+        }
+    },
+    "config": {
+        "optimize-autoloader": true,
+        "preferred-install": "dist",
+        "sort-packages": true,
+        "allow-plugins": {
+            "pestphp/pest-plugin": true,
+            "phpro/grumphp": true,
+            "php-http/discovery": true
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}

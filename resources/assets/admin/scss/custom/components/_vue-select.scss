@@ -1,0 +1,14 @@
+.dark-layout {
+    .v-select.vs--single {
+        .vs__selected {
+            color: #7367f0 !important;
+            background-color: rgba(115, 103, 240, 0.12);
+        }
+    }
+
+    .vs__selected {
+        .vs__deselect {
+            fill: white !important;
+        }
+    }
+}

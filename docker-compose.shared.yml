@@ -1,0 +1,107 @@
+version: "3.8"
+services:
+  php:
+    build:
+      context: .
+      dockerfile: ./.docker/php/Dockerfile
+    container_name: vfx_php
+    hostname: vfx_php
+    env_file:
+      - .docker.env
+    volumes:
+      - ./:/app:cached
+      - ./.docker/zsh/.zshrc:/home/developer/.zshrc:cached
+      - ./.docker/php/conf.d/local.ini:/usr/local/etc/php/conf.d/local.ini:cached
+      - shared_composer_cache:/cache/.composer:delegated
+      - shared_yarn_cache:/cache/.yarn:delegated
+    networks:
+      - default
+      - mysql
+
+  phpd:
+    build:
+      context: .
+      dockerfile: ./.docker/php/Dockerfile
+      args:
+        - "PHP_USE_XDEBUG=true"
+    container_name: vfx_phpd
+    hostname: vfx_phpd
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    env_file:
+      - .docker.env
+    volumes:
+      - ./:/app:cached
+      - ./.docker/zsh/.zshrc:/home/developer/.zshrc:cached
+      - ./.docker/php/conf.d/local.ini:/usr/local/etc/php/conf.d/local.ini:cached
+      - shared_composer_cache:/cache/.composer:delegated
+      - shared_yarn_cache:/cache/.yarn:delegated
+    networks:
+      - default
+      - mysql
+
+  scraping:
+    build:
+      context: .
+      dockerfile: ./.docker/scraping/Dockerfile
+    container_name: vfx_scraping
+    hostname: vfx_scraping
+    volumes:
+      - ./scraping:/app:cached
+
+  nginx:
+    image: nginx:1.23
+    container_name: vfx_nginx
+    hostname: vfx_nginx
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    volumes:
+      - ./:/app:cached
+      - ./.docker/nginx/conf.d/default.conf:/etc/nginx/conf.d/default.conf:cached
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.vfx.rule=Host(`vfx.loc`)"
+      - "traefik.http.routers.vfx.entrypoints=http"
+    networks:
+      - default
+      - traefik
+
+  elasticsearch:
+    image: elasticsearch:7.17.8
+    container_name: vfx_elasticsearch
+    hostname: vfx_elasticsearch
+    environment:
+      - discovery.type=single-node
+      - bootstrap.memory_lock=true
+      - logger.level=WARN
+      - ES_JAVA_OPTS=-Xms4096m -Xmx4096m
+    ports:
+      - "9200:9200"
+      - "9300:9300"
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    volumes:
+      - ./.docker/elasticsearch/data:/usr/share/elasticsearch/data:delegated
+      - ./.docker/elasticsearch/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
+
+  redis:
+    image: redis:7.0.7
+    container_name: vfx_redis
+    hostname: vfx_redis
+    volumes:
+      - ./.docker/redis/data:/data:delegated
+
+networks:
+  default:
+  mysql:
+    external: true
+  traefik:
+    external: true
+
+volumes:
+  shared_composer_cache:
+    external: true
+  shared_yarn_cache:
+    external: true

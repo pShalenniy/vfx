@@ -1,0 +1,115 @@
+.form-sign-up-section {
+   margin-top: 100px;
+   padding-top: 52px;
+   padding-bottom: 80px;
+
+   .sign-up-form {
+
+      &__title {
+         font-size: 32px;
+         line-height: 39px;
+         font-weight: 600;
+         text-align: center;
+         margin-bottom: 17px;
+      }
+
+      &__subtitle {
+         font-size: 16px;
+         line-height: 24px;
+         text-align: center;
+         margin-bottom: 54px;
+      }
+
+   }
+
+   .row {
+      margin: 0 -30px;
+   }
+
+   .col-12, .col-md-6{
+      padding: 0 30px;
+   }
+
+   .form-group,
+   .btn-outline-light {
+      margin-bottom: 30px;
+
+      @media (max-width: 768px){
+         margin-bottom: 20px;
+      }
+   }
+
+   .form-label {
+      font-size: 12px;
+      line-height: 15px;
+      padding: 8px 10px 0px;
+      font-weight: 500;
+      margin-bottom: 0;
+   }
+
+   .form-control {
+      font-size: 16px;
+      line-height: 19px;
+
+      &::placeholder {
+         opacity: .25;
+      }
+
+      &:hover, &:focus {
+
+         &::placeholder {
+            opacity: 1;
+         }
+      }
+   }
+}
+
+//Warning
+
+.invalid-feedback {
+   position: absolute;
+   width: auto;
+   top: 17px;
+   right: 20px;
+   font-size: 12px;
+   line-height: 16px;
+   font-weight: 500;
+   color: $danger;
+   margin-top: 0;
+   z-index: 10;
+   padding-left: 26px;
+   background-image: url(../img/icons/ic_warning.svg);
+   background-repeat: no-repeat;
+   background-size: 16px;
+}
+
+.form-group.is-invalid  {
+
+   .form-control.is-invalid, .form-label {
+      color: $danger;
+   }
+}
+
+.form-control.is-invalid {
+   background: none;
+   padding-right: 20px;
+
+   &:focus {
+      box-shadow: none;
+   }
+}
+
+
+.form-sign-up-section {
+   .btn-outline-light__sm {
+      margin-top: 36px;
+   }
+}
+
+.textarea-counter-value {
+    padding: 1px 6px !important;
+    border-radius: 0 0 5px 5px;
+    margin-right: 1rem;
+    background-color: $success;
+    color: #fff;
+}

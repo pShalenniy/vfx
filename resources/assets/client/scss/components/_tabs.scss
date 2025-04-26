@@ -1,0 +1,16 @@
+.nav-pills {
+    gap: 10px;
+    .nav-link {
+        height: 40px;
+        padding: 7px 20px;
+        line-height: 28px;
+        &:not(:hover) {
+            color: #040233 !important;
+        }
+        &:hover,
+        &.active {
+            background-color: #040233 !important;
+            color: #fff !important;
+        }
+    }
+}

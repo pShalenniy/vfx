@@ -1,0 +1,76 @@
+.popover-auth {
+    left: auto!important;
+    top: calc(100% + 20px) !important;
+    right: -45px!important;
+    transform: none!important;
+    width: 340px;
+    max-width: 340px;
+    background-color: #fff;
+    box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.25);
+    position: relative;
+    border: 0;
+    border-radius: 0;
+    font-family: $font-base;
+    font-size: 12px;
+
+    &:after {
+        content: "";
+        position: absolute;
+        top: -20px;
+        right: 47px;
+        border: 10px solid transparent;
+        border-bottom: 10px solid #fff;
+    }
+
+    @media (max-width: 1199px) {
+        left: -87px!important;
+        right: auto!important;
+
+        &:after {
+            right: auto;
+            left: 87px;
+        }
+    }
+
+    hr {
+        margin: 20px 0 16px;
+    }
+
+    .popover-header {
+        position: relative;
+        padding: 20px 30px;
+        background-color: transparent;
+        border-bottom: 0;
+        font-size: 24px;
+        line-height: 32px;
+        font-weight: 600;
+
+        &::before {
+            display: none;
+        }
+
+        &:after {
+            position: absolute;
+            content: '';
+            bottom: 0;
+            left: 20px;
+            right: 20px;
+            border-bottom: 1px solid $light;
+        }
+    }
+
+    .popover-body {
+        padding: 30px 20px 20px;
+        color: $base-color;
+        overflow: auto;
+        max-height: calc(100vh - 182px);
+
+        .form-control {
+            height: 55px;
+        }
+    }
+}
+
+#profile-popover-wrapper {
+    position: relative;
+}
